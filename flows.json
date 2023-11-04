@@ -1,0 +1,169 @@
+[
+    {
+        "id": "fcb976a007f7590c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c5c096ac70a83daf",
+        "type": "Art-Net In",
+        "z": "fcb976a007f7590c",
+        "name": "Artnet in",
+        "artnetcontroller": "fb609cf7e07eefaa",
+        "net": 0,
+        "subnet": 0,
+        "universe": 0,
+        "outformat": "buckets",
+        "sendonchange": true,
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "627685cba32ceb10"
+            ]
+        ]
+    },
+    {
+        "id": "627685cba32ceb10",
+        "type": "delay",
+        "z": "fcb976a007f7590c",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 180,
+        "wires": [
+            [
+                "e5c0ce16fbea6d76"
+            ]
+        ]
+    },
+    {
+        "id": "e5c0ce16fbea6d76",
+        "type": "delay",
+        "z": "fcb976a007f7590c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 180,
+        "wires": [
+            [
+                "d95afece04b478bf"
+            ]
+        ]
+    },
+    {
+        "id": "4f010b0724a5ba95",
+        "type": "websocket out",
+        "z": "fcb976a007f7590c",
+        "name": "",
+        "server": "1b4cd7fbcb172617",
+        "client": "",
+        "x": 980,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ac19bc4f278df3da",
+        "type": "csv",
+        "z": "fcb976a007f7590c",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "4f010b0724a5ba95"
+            ]
+        ]
+    },
+    {
+        "id": "d95afece04b478bf",
+        "type": "function",
+        "z": "fcb976a007f7590c",
+        "name": "get Buckets",
+        "func": "\nmsg.payload = msg.payload.buckets\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 180,
+        "wires": [
+            [
+                "c6e3e4d8e5f14d69"
+            ]
+        ]
+    },
+    {
+        "id": "c6e3e4d8e5f14d69",
+        "type": "split",
+        "z": "fcb976a007f7590c",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "ac19bc4f278df3da"
+            ]
+        ]
+    },
+    {
+        "id": "fb609cf7e07eefaa",
+        "type": "Art-Net Controller",
+        "name": "",
+        "bind": "0.0.0.0",
+        "port": "6454",
+        "sname": "dmxnet",
+        "lname": "dmxnet - OpenSource ArtNet Transceiver",
+        "oemcode": "0x2908",
+        "estacode": "0x0000",
+        "loglevel": "warn"
+    },
+    {
+        "id": "1b4cd7fbcb172617",
+        "type": "websocket-listener",
+        "path": "/ws/artnet",
+        "wholemsg": "false"
+    }
+]
